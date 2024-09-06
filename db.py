@@ -16,6 +16,28 @@ def insert_event(nombre, telefono):
             connection.execute(query, {"nombre": nombre, "telefono": telefono})
             connection.commit()
             print("Insert realizado datos ", nombre, telefono)
+            connection.close()
     except Exception as e:
         print(f"Error al insertar evento: {e}")
 
+def delete_event(id):
+    try:
+        with engine.connect() as connection:
+            query = text("DELETE FROM contactos WHERE id = (:id)")
+            connection.execute(query, {"id":id})
+            connection.commit()
+            print("Delete realizado")
+            connection.close()
+    except Exception as e:
+        print(f"Error al eliminar evento: {e}")
+
+def edit_event(id, nombre, telefono):
+    try:
+        with engine.connect() as connection:
+            query = text("UPDATE contactos SET nombre = (:nombre), telefono = (:telefono) WHERE id = (:id)")
+            connection.execute(query, {"nombre": nombre, "telefono": telefono, "id":id})
+            connection.commit()
+            print("Update realizado")
+            connection.close()
+    except Exception as e:
+        print(f"Error al editar evento: {e}")
